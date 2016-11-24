@@ -7,7 +7,7 @@ var inflect = require('inflect');
 var XERO_BASE_URL = 'https://api.xero.com';
 var XERO_API_URL = XERO_BASE_URL + '/api.xro/2.0';
 
-function Xero(key, secret, rsa_key, oauth_token, oauth_token_secret, showXmlAttributes, customHeaders) {
+function Xero(key, secret, oauth_token, oauth_token_secret, showXmlAttributes, customHeaders) {
     this.key = key;
     this.secret = secret;
     this.oauth_token = oauth_token;
