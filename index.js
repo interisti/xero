@@ -42,13 +42,17 @@ Xero.prototype.call = function (method, path, body) {
             }
         }
         var process = function (err, xml, res) {
-            if (err) {
-                return reject(err);
-            }
+            self.parser.parseString(xml, function (parseErr, json) {
+                if (parseErr) {
+                    return reject(parseErr);
+                }
 
-            self.parser.parseString(xml, function (err, json) {
                 if (err) {
-                    return reject(err);
+                    // parse error from xml
+                    var error = new Error(json.ApiException.Message);
+                    error.errorType = json.ApiException.Type;
+                    error.errorNumber = json.ApiException.ErrorNumber;
+                    return reject(error);
                 }
 
                 if (json && json.Response && json.Response.Status !== 'OK') {
